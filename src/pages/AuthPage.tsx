@@ -10,7 +10,6 @@ const SignUpPage: React.FC = () => {
       buttonText="Зарегистрироваться"
       link={{ text: 'Уже есть аккаунт? Войти', to: '/auth/sign-in' }}
       endpoint="/auth/reg"
-      method="POST"
     />
   )
 }
@@ -25,7 +24,6 @@ const SignInPage: React.FC = () => {
         to: '/auth/sign-up',
       }}
       endpoint="/auth/login"
-      method="POST"
     />
   )
 }

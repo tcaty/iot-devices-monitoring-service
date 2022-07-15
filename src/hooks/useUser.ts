@@ -19,7 +19,7 @@ const useUser = (): UseUser => {
   const [username, setUsername] = useLocalStorage(`${prefix}-username`, '')
   const [id, setId] = useLocalStorage(`${prefix}-id`, -1)
 
-  const { data: user, fetch } = useFetchData<User>('/auth/profile', 'GET')
+  const { data: user, fetch } = useFetchData<User>('/auth/profile', false)
 
   const navigate = useNavigate()
 

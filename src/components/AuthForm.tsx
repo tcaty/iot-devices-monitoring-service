@@ -15,7 +15,6 @@ interface Props {
     to: string
   }
   endpoint: string
-  method: RequestMethod
 }
 
 const AuthForm: React.FC<Props> = ({
@@ -23,12 +22,11 @@ const AuthForm: React.FC<Props> = ({
   heading,
   link: { text, to },
   endpoint,
-  method,
 }) => {
   const [username, setUsername] = useInput('')
   const [password, setPassword] = useInput('')
 
-  const { login, isLoading, isError } = useLogin(endpoint, method, {
+  const { login, isLoading, isError } = useLogin(endpoint, {
     username,
     password,
   })

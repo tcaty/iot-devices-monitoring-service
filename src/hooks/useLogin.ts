@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 
-import { AuthInfo, JWT, RequestMethod } from '../types'
+import { useQuery } from 'react-query'
+
+import { AuthInfo, JWT } from '../types'
 
 import useAccessToken from './useAccessToken'
-import useFetchData from './useFetchData'
+import useAxios from './useAxios'
 import useUser from './useUser'
 
 interface UseLogin {
@@ -12,18 +14,18 @@ interface UseLogin {
   isError: boolean
 }
 
-const useLogin = (
-  endpoint: string,
-  method: RequestMethod,
-  authInfo: AuthInfo,
-): UseLogin => {
+const useLogin = (endpoint: string, authInfo: AuthInfo): UseLogin => {
   const { setAccessToken, accessToken } = useAccessToken()
   const { fetchUser } = useUser()
 
-  const { data, fetch, isLoading, isError } = useFetchData<JWT>(
-    endpoint,
-    method,
-    authInfo,
+  const axios = useAxios()
+
+  const { data, isFetching, isError, refetch } = useQuery(
+    [endpoint, authInfo],
+    async () => {
+      return (await axios.post(endpoint, authInfo)) as JWT
+    },
+    { enabled: false },
   )
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const useLogin = (
     }
   }, [accessToken, fetchUser])
 
-  return { login: fetch, isLoading, isError }
+  return { login: refetch, isLoading: isFetching, isError }
 }
 
 export default useLogin

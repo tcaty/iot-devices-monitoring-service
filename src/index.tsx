@@ -7,7 +7,13 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from './App'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(
