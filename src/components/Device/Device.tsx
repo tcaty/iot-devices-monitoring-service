@@ -2,20 +2,10 @@ import React, { useCallback, useContext } from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material'
 
-import {
-  SelectedDeviceIdContext,
-  SelectedSensorIdContext,
-} from '../../contexts'
-import { useDataMutation } from '../../hooks'
+import { SelectedDeviceIdContext, SelectedSensorIdContext } from '../../contexts'
+import { useDataMutation, useUserPosition } from '../../hooks'
 import { DeviceData, IDevice } from '../../types'
 
 import DeviceDialog from './Dialog'
@@ -23,10 +13,12 @@ import DeviceDialog from './Dialog'
 interface Props {
   device: IDevice
   queryKey: string
+  devices: IDevice[]
 }
 
 const Device: React.FC<Props> = ({
   device: { id, name, comment, longitude, latitude },
+  devices,
   queryKey,
 }) => {
   const { mutate: editDevice } = useDataMutation<DeviceData>(
@@ -34,15 +26,9 @@ const Device: React.FC<Props> = ({
     'PUT',
     queryKey,
   )
-  const { mutate: deleteDevice } = useDataMutation(
-    `/devices/${id}`,
-    'DELETE',
-    queryKey,
-  )
+  const { mutate: deleteDevice } = useDataMutation(`/devices/${id}`, 'DELETE', queryKey)
 
-  const { setSelectedId: setDeviceId, selectedId } = useContext(
-    SelectedDeviceIdContext,
-  )
+  const { setSelectedId: setDeviceId, selectedId } = useContext(SelectedDeviceIdContext)
   const { setSelectedId: setSensorId } = useContext(SelectedSensorIdContext)
 
   const showSensors = useCallback(() => {
@@ -51,7 +37,11 @@ const Device: React.FC<Props> = ({
   }, [setDeviceId, setSensorId, id])
 
   return (
-    <Card sx={{ border: selectedId === id ? '1px solid #1976d2' : 'none' }}>
+    <Card
+      sx={{
+        border: `1px solid ${selectedId === id ? '#1976d2' : 'transparent'}`,
+      }}
+    >
       <CardContent>
         <Stack spacing={0.5}>
           <Typography color="text.secondary">Устройство #{id}</Typography>
@@ -72,7 +62,13 @@ const Device: React.FC<Props> = ({
             icon={<EditIcon />}
             color="success"
             handleSuccess={editDevice}
-            initialValues={{ name, comment, latitude, longitude }}
+            initialValues={{
+              name,
+              comment,
+              latitude,
+              longitude,
+            }}
+            data={devices}
           />
           <Button
             onClick={() => deleteDevice(undefined)}

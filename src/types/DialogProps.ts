@@ -13,14 +13,17 @@ interface DialogProps {
     | undefined
   title: string
   description: string
+  resetForm: () => void
   onSuccess: () => void
   children: React.ReactElement | React.ReactElement[]
 }
 
 interface DialogWrapperProps<T>
-  extends Omit<Omit<DialogProps, 'onSuccess'>, 'children'> {
+  extends Omit<Omit<Omit<DialogProps, 'onSuccess'>, 'children'>, 'resetForm'> {
   handleSuccess: (item: T) => void
   initialValues: T
+  data?: any
+  isLoading?: boolean
 }
 
 export type { DialogProps, DialogWrapperProps }

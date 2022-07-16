@@ -1,3 +1,4 @@
+import getChangeHandler from './getChangeHandler'
 import getLastHourInterval from './getLastHourInterval'
 
-export { getLastHourInterval }
+export { getLastHourInterval, getChangeHandler }

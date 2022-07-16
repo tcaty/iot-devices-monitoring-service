@@ -3,8 +3,7 @@ import React, { useMemo } from 'react'
 import { Grid, Skeleton } from '@mui/material'
 import { v1 } from 'uuid'
 
-import Section from '../Section/Section'
-import SectionTitle from '../Section/Title'
+import SubSection from '../Section/SubSection'
 
 interface Props<T> {
   title: string
@@ -12,7 +11,6 @@ interface Props<T> {
   isError: boolean
   data: T[]
   renderItem: (item: T) => React.ReactElement
-  children: React.ReactElement
 }
 
 const ItemList = <T,>({
@@ -21,7 +19,6 @@ const ItemList = <T,>({
   isLoading,
   isError,
   renderItem,
-  children,
 }: Props<T>): JSX.Element => {
   const content = useMemo<React.ReactElement>(() => {
     if (isLoading) {
@@ -55,14 +52,7 @@ const ItemList = <T,>({
     )
   }, [data, isError, isLoading, renderItem])
 
-  return (
-    <Section>
-      <SectionTitle title={title} mb={5}>
-        {children}
-      </SectionTitle>
-      {content}
-    </Section>
-  )
+  return <SubSection title={title}>{content}</SubSection>
 }
 
 export default ItemList

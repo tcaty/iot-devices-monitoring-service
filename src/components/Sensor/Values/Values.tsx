@@ -1,10 +1,10 @@
-import React, { useMemo, Fragment } from 'react'
+import React, { useMemo, Fragment, useState } from 'react'
 
-import { TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 
-import { useFetchData, useInput } from '../../../hooks'
+import { useFetchData } from '../../../hooks'
 import { SensorValue } from '../../../types'
-import { getLastHourInterval } from '../../../utils'
+import { getChangeHandler, getLastHourInterval } from '../../../utils'
 import Section from '../../Section/Section'
 import SectionTitle from '../../Section/Title'
 
@@ -18,7 +18,7 @@ interface Props {
 const SensorValues: React.FC<Props> = ({ sensorId }) => {
   const interval = useMemo(() => getLastHourInterval(), [])
 
-  const [count, handleChange] = useInput('10')
+  const [count, setCount] = useState('10')
 
   const { data, isLoading, isError } = useFetchData<SensorValue[]>(
     `/sensor/${sensorId}/sensor-values`,
@@ -38,13 +38,14 @@ const SensorValues: React.FC<Props> = ({ sensorId }) => {
 
   return (
     <Section>
-      <SectionTitle title={`Показания датчика #${sensorId}`} mb={5} />
+      <Box mb={5}>
+        <SectionTitle title={`Показания датчика #${sensorId}`} />
+      </Box>
       <TextField
         type="number"
         label="Кол-во последних показаний"
         value={count}
-        onChange={handleChange}
-        sx={{ mb: 5 }}
+        onChange={getChangeHandler(setCount)}
       />
       <Fragment>
         <SensorValuesChart values={transformedData} />

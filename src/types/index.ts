@@ -1,4 +1,4 @@
-import { IDevice, DeviceData } from './Device'
+import { IDevice, DeviceData, Position } from './Device'
 import { DialogProps, DialogWrapperProps } from './DialogProps'
 import { SelectedIdContext } from './SelectedIdContext'
 import { ISensor, SensorValue, SensorData } from './Sensor'
@@ -17,4 +17,5 @@ export type {
   DeviceData,
   SensorData,
   DialogWrapperProps,
+  Position,
 }

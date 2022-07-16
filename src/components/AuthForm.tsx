@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Link, Stack, TextField, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import { useLogin, useInput } from '../hooks'
-import { RequestMethod } from '../types'
+import { useLogin } from '../hooks'
+import { getChangeHandler } from '../utils'
 
 interface Props {
   heading: string
@@ -23,8 +23,8 @@ const AuthForm: React.FC<Props> = ({
   link: { text, to },
   endpoint,
 }) => {
-  const [username, setUsername] = useInput('')
-  const [password, setPassword] = useInput('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const { login, isLoading, isError } = useLogin(endpoint, {
     username,
@@ -52,13 +52,15 @@ const AuthForm: React.FC<Props> = ({
         label="Введите логин"
         fullWidth={true}
         value={username}
-        onChange={setUsername}
+        onChange={getChangeHandler(setUsername)}
+        required={true}
       />
       <TextField
         label="Введите пароль"
         fullWidth={true}
         value={password}
-        onChange={setPassword}
+        onChange={getChangeHandler(setPassword)}
+        required={true}
       />
       <Box width={200}>
         <LoadingButton

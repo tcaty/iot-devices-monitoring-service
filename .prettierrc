@@ -4,6 +4,6 @@
   "semi": false,
   "endOfLine": "auto",
   "singleQuote": true,
-  "printWidth": 80,
+  "printWidth": 90,
   "arrowParens": "avoid"
 }

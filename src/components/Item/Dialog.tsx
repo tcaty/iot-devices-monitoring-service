@@ -18,6 +18,7 @@ const ItemDialog: React.FC<DialogProps> = ({
   title,
   description,
   onSuccess,
+  resetForm,
   children,
 }) => {
   const [open, setOpen] = useState(false)
@@ -28,7 +29,8 @@ const ItemDialog: React.FC<DialogProps> = ({
 
   const handleClose = useCallback(() => {
     setOpen(false)
-  }, [])
+    resetForm()
+  }, [resetForm])
 
   const handleSuccess = useCallback(() => {
     onSuccess()
@@ -41,21 +43,23 @@ const ItemDialog: React.FC<DialogProps> = ({
         {icon}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={3}>
-            <DialogContentText>{description}</DialogContentText>
-            {children}
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" color="error" onClick={handleClose}>
-            закрыть
-          </Button>
-          <Button variant="contained" color="success" onClick={handleSuccess}>
-            Подтвердить
-          </Button>
-        </DialogActions>
+        <form onSubmit={handleSuccess}>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogContent>
+            <Stack spacing={3}>
+              <DialogContentText>{description}</DialogContentText>
+              {children}
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" color="error" onClick={handleClose}>
+              закрыть
+            </Button>
+            <Button variant="contained" color="success" type="submit">
+              Подтвердить
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   )

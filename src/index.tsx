@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { YMaps } from '@pbe/react-yandex-maps'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
@@ -20,8 +21,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <YMaps>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </YMaps>
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

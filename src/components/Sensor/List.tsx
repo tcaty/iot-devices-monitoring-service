@@ -5,6 +5,8 @@ import { Add } from '@mui/icons-material'
 import { useDataMutation, useFetchData } from '../../hooks'
 import { ISensor, SensorData } from '../../types'
 import ItemList from '../Item/List'
+import Section from '../Section/Section'
+import SectionTitle from '../Section/Title'
 
 import SensorDialog from './Dialog'
 import Sensor from './Sensor'
@@ -24,26 +26,29 @@ const SensorList: React.FC<Props> = ({ deviceId }) => {
   >('/sensors', 'POST', endpoint)
 
   return (
-    <ItemList
-      title={`Датчики устройства #${deviceId}`}
-      data={data}
-      renderItem={(sensor: ISensor) => (
-        <Sensor sensor={sensor} queryKey={endpoint} />
-      )}
-      isLoading={isLoading}
-      isError={isError}
-    >
-      <SensorDialog
-        title={`Добавить датчик на устройство #${deviceId}`}
-        icon={<Add />}
-        color="success"
-        description="Будьте уверены, что созданные датчик подойдет к выбранному устройству"
-        handleSuccess={(sensorData: SensorData) =>
-          addSensor({ deviceId, ...sensorData })
-        }
-        initialValues={{ name: '', comment: '' }}
+    <Section>
+      <SectionTitle title={`Датчики устройства #${deviceId}`}>
+        <SensorDialog
+          title={`Добавить датчик на устройство #${deviceId}`}
+          icon={<Add />}
+          color="success"
+          description="Будьте уверены, что созданные датчик подойдет к выбранному устройству"
+          handleSuccess={(sensorData: SensorData) =>
+            addSensor({ deviceId, ...sensorData })
+          }
+          initialValues={{ name: '', comment: '' }}
+        />
+      </SectionTitle>
+      <ItemList
+        title="Список датчиков"
+        data={data}
+        renderItem={(sensor: ISensor) => (
+          <Sensor sensor={sensor} queryKey={endpoint} />
+        )}
+        isLoading={isLoading}
+        isError={isError}
       />
-    </ItemList>
+    </Section>
   )
 }
 

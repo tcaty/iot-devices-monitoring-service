@@ -1,7 +1,6 @@
 import React from 'react'
 
 import {
-  Box,
   Paper,
   Table,
   TableBody,
@@ -9,10 +8,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from '@mui/material'
 
 import { SensorValue } from '../../../types'
+import SubSection from '../../Section/SubSection'
 
 interface Props {
   values: SensorValue[]
@@ -20,10 +19,7 @@ interface Props {
 
 const SensorValuesTable: React.FC<Props> = ({ values }) => {
   return (
-    <Box>
-      <Typography variant="h5" sx={{ mb: 2 }}>
-        Таблица
-      </Typography>
+    <SubSection title="Таблица">
       <TableContainer component={Paper} style={{ maxHeight: 400 }}>
         <Table stickyHeader>
           <TableHead>
@@ -49,7 +45,7 @@ const SensorValuesTable: React.FC<Props> = ({ values }) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+    </SubSection>
   )
 }
 

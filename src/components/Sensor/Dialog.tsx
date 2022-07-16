@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { TextField } from '@mui/material'
 
-import { useInput } from '../../hooks'
 import { DialogWrapperProps, SensorData } from '../../types'
+import { getChangeHandler } from '../../utils'
 import ItemEditDialog from '../Item/Dialog'
 
 const SensorDialog: React.FC<DialogWrapperProps<SensorData>> = props => {
-  const [name, handleNameChange] = useInput(props.initialValues.name)
-  const [comment, handleCommentChange] = useInput(props.initialValues.comment)
+  const { initialValues } = props
+
+  const [name, setName] = useState(initialValues.name)
+  const [comment, setComment] = useState(initialValues.comment)
+
+  const resetForm = () => {
+    setName(initialValues.name)
+    setComment(initialValues.comment)
+  }
 
   return (
     <ItemEditDialog
       {...props}
+      resetForm={resetForm}
       onSuccess={() =>
         props.handleSuccess({
           name,
@@ -22,15 +30,17 @@ const SensorDialog: React.FC<DialogWrapperProps<SensorData>> = props => {
     >
       <TextField
         value={name}
-        onChange={handleNameChange}
+        onChange={getChangeHandler(setName)}
         label="Введите имя"
         variant="filled"
+        required={true}
       />
       <TextField
         value={comment}
-        onChange={handleCommentChange}
+        onChange={getChangeHandler(setComment)}
         label="Введите комменатрий"
         variant="filled"
+        required={true}
       />
     </ItemEditDialog>
   )

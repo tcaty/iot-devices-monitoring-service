@@ -44,7 +44,11 @@ const Sensor: React.FC<Props> = ({
   }, [setSelectedId, id])
 
   return (
-    <Card sx={{ border: selectedId === id ? '1px solid #1976d2' : 'none' }}>
+    <Card
+      sx={{
+        border: `1px solid ${selectedId === id ? '#1976d2' : 'transparent'}`,
+      }}
+    >
       <CardContent>
         <Stack spacing={0.5}>
           <Typography color="text.secondary">Датчик #{id}</Typography>
