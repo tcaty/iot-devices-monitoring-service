@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 
-import DeviceList from '../components/Device/List'
-import SensorList from '../components/Sensor/List'
+import DeviceSection from '../components/Device/Section'
+import SensorSection from '../components/Sensor/Section'
 import SensorValues from '../components/Sensor/Values/Values'
 import UserInfo from '../components/UserInfo'
 import { SelectedDeviceIdContext, SelectedSensorIdContext } from '../contexts'
@@ -15,8 +15,8 @@ const MainPage: React.FC = () => {
   return (
     <Fragment>
       <UserInfo />
-      <DeviceList />
-      {deviceId > 0 ? <SensorList deviceId={deviceId} /> : null}
+      <DeviceSection />
+      {deviceId > 0 ? <SensorSection deviceId={deviceId} /> : null}
       {sensorId > 0 ? <SensorValues sensorId={sensorId} /> : null}
     </Fragment>
   )

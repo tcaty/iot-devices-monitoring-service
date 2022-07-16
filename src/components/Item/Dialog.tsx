@@ -32,10 +32,14 @@ const ItemDialog: React.FC<DialogProps> = ({
     resetForm()
   }, [resetForm])
 
-  const handleSuccess = useCallback(() => {
-    onSuccess()
-    handleClose()
-  }, [onSuccess, handleClose])
+  const handleSuccess = useCallback(
+    (e: React.SyntheticEvent) => {
+      onSuccess()
+      handleClose()
+      e.preventDefault()
+    },
+    [onSuccess, handleClose],
+  )
 
   return (
     <div>

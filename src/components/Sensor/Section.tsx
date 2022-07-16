@@ -15,16 +15,17 @@ interface Props {
   deviceId: number
 }
 
-const SensorList: React.FC<Props> = ({ deviceId }) => {
+const SensorSection: React.FC<Props> = ({ deviceId }) => {
   const endpoint = useMemo(() => `/devices/${deviceId}/sensors`, [deviceId])
 
   const { data, isLoading, isError } = useFetchData<ISensor[]>(
     `/devices/${deviceId}/sensors`,
   )
-  const { mutate: addSensor } = useDataMutation<
-    SensorData & { deviceId: number }
-  >('/sensors', 'POST', endpoint)
-
+  const { mutate: addSensor } = useDataMutation<SensorData & { deviceId: number }>(
+    '/sensors',
+    'POST',
+    endpoint,
+  )
   return (
     <Section>
       <SectionTitle title={`Датчики устройства #${deviceId}`}>
@@ -42,9 +43,7 @@ const SensorList: React.FC<Props> = ({ deviceId }) => {
       <ItemList
         title="Список датчиков"
         data={data}
-        renderItem={(sensor: ISensor) => (
-          <Sensor sensor={sensor} queryKey={endpoint} />
-        )}
+        renderItem={(sensor: ISensor) => <Sensor sensor={sensor} queryKey={endpoint} />}
         isLoading={isLoading}
         isError={isError}
       />
@@ -52,4 +51,4 @@ const SensorList: React.FC<Props> = ({ deviceId }) => {
   )
 }
 
-export default SensorList
+export default SensorSection

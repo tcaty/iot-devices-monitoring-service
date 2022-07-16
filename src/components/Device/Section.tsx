@@ -16,7 +16,7 @@ import Device from './Device'
 import DeviceDialog from './Dialog'
 import DeviceMap from './Map'
 
-const DeviceList: React.FC = () => {
+const DeviceSection: React.FC = () => {
   const endpoint = useMemo(() => '/devices', [])
 
   const { data, isLoading, isError } = useFetchData<IDevice[]>(endpoint)
@@ -75,4 +75,4 @@ const DeviceList: React.FC = () => {
     </Section>
   )
 }
-export default DeviceList
+export default DeviceSection
